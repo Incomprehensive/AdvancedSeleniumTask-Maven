@@ -75,6 +75,6 @@ public class SeleniumTest extends FileHandling{
 
     @After
     public void close() {
-        driver.close();
+        driver.quit();
     }
 }
