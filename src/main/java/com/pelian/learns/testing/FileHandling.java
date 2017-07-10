@@ -19,29 +19,18 @@ import java.util.Scanner;
  * Created by Anton Pelianski on 08.07.2017.
  */
 public class FileHandling {
+
     @FindBy(xpath = "//input[@name = 'login_username']")
     protected WebElement username;
 
     @FindBy (xpath = "//input[@name = 'login_password']")
     protected WebElement pass;
 
-    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[2]")
-    protected WebElement logoutButton;
-
     @FindBy (xpath = "//span[@class = 'a-like bold']")
     protected WebElement loginButtonForm;
 
     @FindBy (xpath = "//input[@name = 'login']")
     protected WebElement loginButtonSubmit;
-
-    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[1]")
-    protected WebElement loggedUser;
-
-    @FindBy (xpath = "//input[@id = 'search-text']")
-    protected WebElement searchInput;
-
-    @FindBy (xpath = "//input[@id = 'search-submit']")
-    protected WebElement searchSubmit;
 
     protected WebDriver driver;
 

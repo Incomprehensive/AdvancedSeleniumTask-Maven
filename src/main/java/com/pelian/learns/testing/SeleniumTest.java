@@ -3,7 +3,9 @@ package com.pelian.learns.testing;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +13,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.*;
 
 public class SeleniumTest {
+
+    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[2]")
+    protected WebElement logoutButton;
+
+    @FindBy(xpath = "//input[@id = 'search-text']")
+    protected WebElement searchInput;
+
+    @FindBy (xpath = "//input[@id = 'search-submit']")
+    protected WebElement searchSubmit;
 
     FileHandling fileHandling = new FileHandling();
 
@@ -41,14 +52,14 @@ public class SeleniumTest {
 
         // Search
         fileHandling.logToFile("Enter login and password");
-        fileHandling.searchInput.sendKeys("The infestation");
-        fileHandling.searchSubmit.click();
+        searchInput.sendKeys("The infestation");
+        searchSubmit.click();
         fileHandling.logToFile("Enter a query in a search field");
 
         // Log out
-        fileHandling.hold.until(ExpectedConditions.elementToBeClickable(fileHandling.logoutButton));
+        fileHandling.hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
         fileHandling.logToFile("Wait for logout button to be clickable");
-        fileHandling.logoutButton.click();
+        logoutButton.click();
         fileHandling.logToFile("Logout");
     }
 
