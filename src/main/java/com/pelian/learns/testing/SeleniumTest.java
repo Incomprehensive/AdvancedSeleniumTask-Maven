@@ -22,6 +22,8 @@ public class SeleniumTest {
 
     @FindBy (xpath = "//input[@id = 'search-submit']")
     protected WebElement searchSubmit;
+    
+    protected String website = "https://rutracker.org";
 
     FileHandling fileHandling = new FileHandling();
 
@@ -44,7 +46,7 @@ public class SeleniumTest {
     @Test
     public void testLoginSearch() throws IOException {
         // Login
-        fileHandling.driver.get(fileHandling.website);
+        fileHandling.driver.get(website);
         fileHandling.logToFile("Enter a website");
         fileHandling.read();
         fileHandling.logToFile("Read the file with credentials");
