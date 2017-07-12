@@ -56,6 +56,9 @@ public class SeleniumTest {
         searchSubmit.click();
         fileHandling.logToFile("Enter a query in a search field");
 
+        // Scan the results and write them to the file
+        fileHandling.resultsToFile();
+
         // Log out
         fileHandling.hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
         fileHandling.logToFile("Wait for logout button to be clickable");
