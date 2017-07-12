@@ -35,8 +35,6 @@ public class FileHandling {
 
     protected WebDriver driver;
 
-    protected String website = "https://rutracker.org";
-
     public String user;
 
     public String password;
