@@ -3,30 +3,23 @@ package com.pelian.learns.testing;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
 
 public class SeleniumTest {
+    protected static WebDriver driver;
 
-    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[2]")
-    protected WebElement logoutButton;
-
-    @FindBy(xpath = "//input[@id = 'search-text']")
-    protected WebElement searchInput;
-
-    @FindBy (xpath = "//input[@id = 'search-submit']")
-    protected WebElement searchSubmit;
-    
     protected String website = "https://rutracker.org";
 
     FileHandling fileHandling = new FileHandling();
 
+    SignUp signUp = new SignUp(driver);
+
+    SearchPage searchPage = new SearchPage(driver);
     /**
      * Method to initialize WebDriver and necessary functions for a test
      */
@@ -34,9 +27,8 @@ public class SeleniumTest {
     public void initialize() {
         // Initializing WebDriver and WebElements PageFactory
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        fileHandling.driver = new ChromeDriver();
-        PageFactory.initElements(fileHandling.driver, this);
-        fileHandling.hold =  new WebDriverWait(fileHandling.driver, 5);
+        driver = new ChromeDriver();
+        PageFactory.initElements(driver, this);
     }
 
     /**
@@ -45,32 +37,32 @@ public class SeleniumTest {
      */
     @Test
     public void testLoginSearch() throws IOException {
+
         // Login
-        fileHandling.driver.get(website);
+        driver.get(website);
         fileHandling.logToFile("Enter a website");
         fileHandling.read();
         fileHandling.logToFile("Read the file with credentials");
-        fileHandling.login();
+        signUp.login(fileHandling.user, fileHandling.password);
 
         // Search
         fileHandling.logToFile("Enter login and password");
-        searchInput.sendKeys("The infestation");
-        searchSubmit.click();
         fileHandling.logToFile("Enter a query in a search field");
 
         // Scan the results and write them to the file
-        fileHandling.resultsToFile();
+        searchPage.CommitSearch();
+        searchPage.resultsToFile(fileHandling.results);
 
         // Log out
-        fileHandling.hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        signUp.hold.until(ExpectedConditions.elementToBeClickable(signUp.logoutButton));
         fileHandling.logToFile("Wait for logout button to be clickable");
-        logoutButton.click();
+        signUp.logoutButton.click();
         fileHandling.logToFile("Logout");
     }
 
     @After
     public void close() {
         // Close all instances of WebDriver
-        fileHandling.driver.quit();
+        driver.quit();
     }
 }

@@ -1,10 +1,6 @@
 package com.pelian.learns.testing;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
@@ -18,23 +14,6 @@ import java.util.Scanner;
  */
 public class FileHandling {
 
-    @FindBy(xpath = "//input[@name = 'login_username']")
-    protected WebElement username;
-
-    @FindBy(xpath = "//input[@name = 'login_password']")
-    protected WebElement pass;
-
-    @FindBy(xpath = "//span[@class = 'a-like bold']")
-    protected WebElement loginButtonForm;
-
-    @FindBy(xpath = "//input[@name = 'login']")
-    protected WebElement loginButtonSubmit;
-
-    @FindBy(xpath = "//child::td[4]/div/a")
-    protected WebElement searchResults;
-
-    protected WebDriver driver;
-
     public String user;
 
     public String password;
@@ -44,6 +23,8 @@ public class FileHandling {
     File file = new File("src/main/resources/login.txt");
 
     File logFile;
+
+    File results = new File("src/main/resources/SearchResults.txt");
 
     /**
      * Method to read credentials from file
@@ -82,27 +63,12 @@ public class FileHandling {
     }
 
     /**
-     * Method that logs you in
-     *
-     * @throws IOException
-     */
-    public void login() throws IOException {
-        PageFactory.initElements(driver, this);
-        hold.until(ExpectedConditions.elementToBeClickable(loginButtonForm));
-        loginButtonForm.click();
-        username.sendKeys(user);
-        pass.sendKeys(password);
-        loginButtonSubmit.click();
-    }
-
-    /**
      * Method to write search results to file
      *
      * @throws FileNotFoundException
      */
     @SuppressWarnings("Since15")
     public void resultsToFile() throws FileNotFoundException {
-        hold.until(ExpectedConditions.visibilityOf(searchResults));
         File results = new File("src/main/resources/SearchResults.txt");
         ArrayList<WebElement> matches = new ArrayList<>();
         ArrayList<String> arrayString = new ArrayList<>();
